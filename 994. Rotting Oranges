@@ -1,0 +1,80 @@
+'''
+994. Rotting Oranges
+Medium
+
+4376
+
+232
+
+Add to List
+
+Share
+You are given an m x n grid where each cell can have one of three values:
+
+0 representing an empty cell,
+1 representing a fresh orange, or
+2 representing a rotten orange.
+Every minute, any fresh orange that is 4-directionally adjacent to a rotten orange becomes rotten.
+
+Return the minimum number of minutes that must elapse until no cell has a fresh orange. If this is impossible, return -1.
+
+
+'''  
+
+directions = [(0,1), (1,0), (-1,0), (0,-1)]
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        row, col = len(grid), len(grid[0])
+        rotted = []
+        fresh = row*col
+        
+        for i in range(row):
+            for j in range(col):
+                
+                if grid[i][j] == 2:
+                    rotted.append((i,j))
+                    fresh -= 1 
+                elif grid[i][j] == 0:
+                    fresh -= 1 
+        
+        
+        if not fresh: return 0 
+        if not rotted: return -1 
+        return self.bfs(rotted, grid, row, col, fresh)
+        
+    
+    
+    
+    def bfs(self, rotted, grid, row, col, fresh):
+        
+        queue = collections.deque(rotted)
+        time = 0
+        
+        
+        while queue:
+            
+            for _ in range(len(queue)):
+                x, y = queue.popleft()
+                
+                for _x, _y in directions:
+                    X, Y = x + _x, y + _y 
+                    
+                    if X < 0 or X >= row or Y < 0 or Y >= col or grid[X][Y] == 0 or grid[X][Y] == 2: continue 
+                        
+                    # fresh orange 
+                    grid[X][Y] = 2 
+                    fresh -= 1 
+                    queue.append((X,Y)) 
+            
+            if not queue:
+                return time if fresh == 0 else -1 
+            
+            time += 1 
+            
+            
+       
+            
+ # Notes:
+ 
+ - attention on corner cases, where fresh == 0 or rotted == 0 
+ - choose where to start, either start with rotted or fresh  
