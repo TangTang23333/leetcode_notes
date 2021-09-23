@@ -1,0 +1,45 @@
+784. Letter Case Permutation
+Medium
+
+2480
+
+130
+
+Add to List
+
+Share
+Given a string s, we can transform every letter individually to be lowercase or uppercase to create another string.
+
+Return a list of all possible strings we could create. You can return the output in any order.
+
+class Solution:
+    def letterCasePermutation(self, s: str) -> List[str]:
+        self.res = []
+        if s.isdigit():
+            return [s]
+        
+        self.dfs(s, 0, [])
+        return self.res 
+    
+    
+    
+    def dfs(self, s, i, subset):
+        # exit 
+        if len(subset) == len(s):
+            self.res.append(''.join(subset[:]))
+            return 
+        
+        
+        
+        if s[i].isdigit():
+            subset.append(s[i])
+            self.dfs(s, i+1, subset)
+        else:
+            # choose the oringinal case 
+            self.dfs(s, i+1, subset + [s[i]]) 
+            # choose the opposite case 
+            self.dfs(s, i+1, subset + [s[i].swapcase()]) 
+
+            
+            
+            
