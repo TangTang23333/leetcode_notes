@@ -1,0 +1,60 @@
+1273 · Maximum Length of Increasing String
+Algorithms
+Hard
+Accepted Rate
+51%
+
+DescriptionSolutionNotesDiscussLeaderboard
+Description
+
+
+ 
+For example, “aab” and “aaa” are increasing strings, and “acb” is not a increasing string.
+You are given n increasing strings, and you can choose any of them to make up a new increasing string. Print the maximum length of the new string.
+
+The strings consist of lowercase English letters only
+The number of strings n 1 \leq n \leq 5 \times 10^41≤n≤5×10 
+4
+ 
+The length of each string 1 \leq length \leq 201≤length≤20
+
+Example
+input：["aaa","bbb","ccc"]
+outpt：9
+explanation：aaabbbccc
+
+
+class Solution:
+    """
+    @param strs: the given increasing strings
+    @return: return the Maxium length of compose incresing string
+    """
+    def getMaxiumLength(self, strs):
+        n = len(strs)
+        if n <= 1:
+            return n 
+        
+        length = [ [0] * 26 for _ in range(26) ]  
+        
+        for each in strs:
+            first, end = ord(each[0]) - ord('a'), ord(each[-1]) - ord('a')
+            if first == end:
+                length[first][end] += len(each)
+            else:
+                length[first][end] = max(length[first][end], len(each))
+                
+      
+    
+        dp = [0] * 26
+        for i in range(26):
+            for j in range(i+1):
+                dp[i] = max(dp[j] + length[j][i], dp[i]) 
+            
+        return max(dp)
+
+
+# Memo:
+
+- create 26*26 matrix to get the longest length from letter i to letter j 
+- dp to get the maximum length 
+- attention on boudary of j, include i, same letter can be connected to get a longer string 
