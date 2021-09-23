@@ -1,0 +1,69 @@
+144. Binary Tree Preorder Traversal
+Easy
+
+2884
+
+98
+
+Add to List
+
+Share
+Given the root of a binary tree, return the preorder traversal of its nodes' values.
+
+
+
+========Recursion================
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        self.res = []
+        if not root:
+            return self.res 
+        
+        
+        self.dfs(root)
+        
+        return self.res 
+    
+    
+    def dfs(self, root):
+        if not root:
+            return 
+        
+        
+        self.res.append(root.val)
+        self.dfs(root.left)
+        self.dfs(root.right)
+        
+ ========Non recursion using stack=============
+ 
+ # Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        stack = [root]
+        if not root:
+            return []
+        res = []
+        
+            
+        while stack:
+            node = stack.pop()
+            res.append(node.val)
+            
+            if node.right:
+                stack.append(node.right)
+            if node.left:
+                stack.append(node.left)
+                
+                
+        return res
