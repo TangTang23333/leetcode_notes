@@ -1,0 +1,48 @@
+46. Permutations
+Medium
+
+7560
+
+149
+
+Add to List
+
+Share
+Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        self.res = []
+        
+        # corner case 
+        if not nums: return []
+        if len(nums) == 1: return [nums]
+        
+        
+        self.dfs(nums, set(), [])
+        return self.res 
+    
+        
+        
+        
+    def dfs(self, nums, visited, subset):
+        # exit 
+        if len(subset) == len(nums):
+            self.res.append(subset[:])
+            return 
+        
+        
+        for i in range(len(nums)):
+            if nums[i] in visited:
+                continue  
+                
+            subset.append(nums[i])
+            visited.add(nums[i])
+            self.dfs(nums, visited, subset)
+            visited.remove(nums[i])
+            subset.pop()
+            
+            
+        
+        
